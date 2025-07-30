@@ -1,6 +1,7 @@
 use std::{env, fs, process};
 
 mod lexer;
+mod parser;
 
 fn main() {
     let args: Vec<String> = env::args().collect();
@@ -16,6 +17,8 @@ fn main() {
     });
 
     let tokens = lexer::lex(&contents);
+    let nodes = parser::parse(&tokens);
 
     println!("Tokens: {tokens:?}");
+    println!("Nodes: {nodes:?}");
 }
