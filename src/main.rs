@@ -1,5 +1,8 @@
-use std::{env, fs, process};
+use std::{env, fs, io, process};
 
+use crate::interpreter::Interpreter;
+
+mod interpreter;
 mod lexer;
 mod parser;
 
@@ -19,6 +22,9 @@ fn main() {
     let tokens = lexer::lex(&contents);
     let nodes = parser::parse(&tokens);
 
-    println!("Tokens: {tokens:?}");
-    println!("Nodes: {nodes:?}");
+    let stdin = io::stdin();
+    let stdout = io::stdout();
+    let mut interpreter = Interpreter::new(stdin, stdout);
+
+    interpreter.run(&nodes).unwrap();
 }
